@@ -3,6 +3,7 @@ import { useRouter } from "next/dist/client/router";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import InfoCard from "../components/InfoCard";
+import Map from "../components/Map";
 
 const Search = ({searchResults}) => {
     const router = useRouter()
@@ -26,12 +27,14 @@ const Search = ({searchResults}) => {
             <p className="button">more Filters</p>
           </div>
           <div className="flex flex-col">
-          {searchResults?.map(({img,locaton,title,description,star,total,price},index)=>(
+          {searchResults?.map(({img,location,title,description,star,total,price,long,lat},index)=>(
               <InfoCard key={index} price={price} img={img} location={location} title={title}  desc={description} star={star} price={price} total={total} />
           ))}
           </div>
         </section>
-       
+       <section className='hidden xl:inline-flex xl:min-w-[600px]'>
+           <Map searchResults={searchResults} />
+       </section>
       </main>
       <Footer classname="" />
     </div>

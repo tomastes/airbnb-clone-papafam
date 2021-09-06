@@ -30,7 +30,6 @@ const Header = ({placeholder}) => {
   const handleChange = (e) => {
     setTyping(true);
     setCity(e.target.value);
-    console.log(city, typing);
   };
   // handleSelectDate
   const handleSelect = (ranges) => {
