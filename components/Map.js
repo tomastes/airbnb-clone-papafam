@@ -11,7 +11,7 @@ const Map = ({searchResults}) => {
     // console.log(coordinates);
     const center = getCenter(coordinates)
     useEffect(()=>{
-        console.log(process.env.mapbox_key);
+        console.log(process.env.NEXT_MAPBOX_API);
     },[])
     const [viewPort, setViewPort] = useState
     ({

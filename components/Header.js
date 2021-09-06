@@ -1,4 +1,6 @@
 import Image from "next/image";
+import {Switch} from '@material-ui/core';
+
 import {
   SearchIcon,
   GlobeAltIcon,
@@ -7,7 +9,7 @@ import {
   UsersIcon,
   UserIcon,
 } from "@heroicons/react/solid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { Calendar, DateRangePicker } from "react-date-range";
@@ -20,6 +22,16 @@ const Header = ({placeholder}) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [numberOfGuests, setNumberOfGuests] = useState(1);
+  const [themeType, setThemeType] = useState(true)
+  // 
+  useEffect(()=>{
+// On page load or when changing themes, best to add inline in `head` to avoid FOUC
+if (themeType) {
+  document.documentElement.classList.add('dark')
+} else {
+  document.documentElement.classList.remove('dark')
+}
+  },[themeType])
   // selection variable
   const selectionRange = {
     startDate: startDate,
@@ -50,8 +62,13 @@ const Header = ({placeholder}) => {
       }
     })
   }
+  // handle theme change
+  const changeTheme =(e)=>{
+    setThemeType(e.target.checked)
+    console.log(themeType);
+  }
   return (
-    <header className="sticky top-0 z-50 grid grid-cols-3 bg-white shadow-md py-5 px-5 md:px-10">
+    <header className="sticky dark:bg-gray-900 top-0 z-50 grid grid-cols-3 bg-white shadow-md py-5 px-5 md:px-10">
       {/* left */}
       <div  className="relative flex items-center h-10 cursor-pointer my-auto">
         <Image onClick={()=>router.push("/")}
@@ -63,25 +80,40 @@ const Header = ({placeholder}) => {
         ;
       </div>
       {/* middle search */}
-      <div className="flex md:shadow-sm items-center md:border-2 rounded-full py-2 ">
+      <div className="flex md:shadow-sm items-center  md:border-2 rounded-full py-2 ">
         <input
           value={ city}
           onChange={(e) => handleChange(e)}
           type="text"
-          className="pl-5 text-sm text-gray-600 flex-grow outline-none"
+          className="pl-5 ml-5 text-sm text-gray-600 dark:text-white   dark:bg-gray-900 flex-grow outline-none"
           placeholder={placeholder ||"start searching"}
         />
         <SearchIcon className="h-8  mr-2 hidden md:inline-flex bg-red-400 text-white rounded-full p-2 cursor-pointer" />
       </div>
+
       {/*  */}
       {/* right */}
       <div className="flex space-x-4 items-center justify-end text-gray-500 ">
-        <p className="hidden md:inline">become a host</p>
-        <GlobeAltIcon className="h-6 " />
+        <p className="hidden dark:text-white md:inline">become a host</p>
+        <GlobeAltIcon className="h-6 dark:text-white" />
         <div className="flex items-center space-x-2 border-2 rounded-full p-2">
-          <MenuIcon className="h-6" />
-          <UserCircleIcon className="h-6" />
+          <MenuIcon className="h-6 dark:text-white" />
+          <UserCircleIcon className="h-6 dark:text-white" />
         </div>
+        {/* theme toggler */}
+        <div className="flex items-center justify-end">
+          <span> ☀️</span> 
+        <Switch
+          onChange={changeTheme}
+          color="primary"
+          name="checkedB"
+          defaultChecked
+          inputProps={{ "aria-label": "primary checkbox" }}
+        />
+       <span>🌙</span>
+        </div>
+        
+ 
       </div>
       {/* calender */}
       {typing && (
@@ -93,11 +125,11 @@ const Header = ({placeholder}) => {
             onChange={handleSelect}
           />
           <div className="flex items-center">
-            <h2 className="text-2xl flex-grow font-semibold">
+            <h2 className="text-2xl dark:text-gray-400 flex-grow font-semibold">
               {" "}
               Number fo guests
             </h2>
-            <UsersIcon className="h-5" />
+            <UsersIcon className="h-5 dark:text-white" />
             <input
               defaultValue="1"
               value={numberOfGuests}
@@ -108,10 +140,10 @@ const Header = ({placeholder}) => {
             />
           </div>
           <div className="flex shadow">
-            <button className="flex-grow text-gray-500 cursor-pointer">
+            <button className="flex-grow  text-gray-500 cursor-pointer">
               Cancel
             </button>
-            <button onClick={search} className="flex-grow text-red-500 ">Search</button>
+            <button onClick={search} className="flex-grow dark:bg-red-400 text-white-500 ">Search</button>
           </div>
         </div>
       )}

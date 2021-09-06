@@ -7,8 +7,10 @@ import MediumCard from "../components/MediumCard";
 import SmallCard from "../components/SmallCard";
 
 export default function Home({ exploreData, cardsData }) {
+
+  
   return (
-    <div className="">
+    <div className="dark:bg-gray-400">
       <Head>
         <title>airbnb clone</title>
         <link rel="icon" href="/favicon.ico" />
@@ -18,9 +20,9 @@ export default function Home({ exploreData, cardsData }) {
       {/* banner */}
       <Banner />
       {/* expolore */}
-      <main className="max-w-7xl mx-auto px-8 sm:px-16">
+      <main className="max-w-7xl shadow-lg dark:bg-gray-800 mx-auto px-8 sm:px-16">
         <section className="pt-6">
-          <h2 className="text-4xl font-semibold pb-5"> Explore Nearby</h2>
+          <h2 className="text-4xl dark:text-red-50 font-semibold pb-5"> Explore Nearby</h2>
           {/* pull data from eindpoints */}
           <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-4 sm:items-center">
             {exploreData?.map(({ img, location, distance }, index) => (
@@ -35,7 +37,7 @@ export default function Home({ exploreData, cardsData }) {
         </section>
         {/* middle card */}
         <section>
-          <h2 className="text-4xl font-semibold py-8">live any where</h2>
+          <h2 className="text-4xl dark:text-red-50 font-semibold py-8">live any where</h2>
           <div className="flex space-x-3 overflow-scroll p-3 -ml-3 scrollbar-hide ">
             {cardsData?.map(({ img, title }, index) => (
               <MediumCard key={index} img={img} title={title} />

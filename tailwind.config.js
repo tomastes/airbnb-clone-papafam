@@ -6,7 +6,12 @@ module.exports = {
     extend: {},
   },
   variants: {
-    extend: {},
+    extend: {
+      backgroundImage: theme=>({
+        'night-ocean':"url('/nightocean.jpg')"
+      })
+    },
   },
+  darkMode:"class",
   plugins: [require("tailwind-scrollbar-hide")],
 };
